@@ -560,6 +560,7 @@ USER root
 ARG INSTALL_IMAGEMAGICK=false
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
+    apt-get update -yqq && \
     apt-get install -y libmagickwand-dev imagemagick && \
     pecl install imagick && \
     docker-php-ext-enable imagick \
@@ -723,6 +724,29 @@ ARG INSTALL_FFMPEG=false
 RUN if [ ${INSTALL_FFMPEG} = true ]; then \
     apt-get update -yqq && \
     apt-get -y install ffmpeg \
+;fi
+
+###########################################################################
+# uchardet:
+###########################################################################
+
+ARG INSTALL_UCHARDET=false
+
+RUN if [ ${INSTALL_UCHARDET} = true ]; then \
+    apt-get install -y uchardet libuchardet-dev \
+;fi
+
+###########################################################################
+# zip:
+###########################################################################
+
+ARG INSTALL_ZIP_ARCHIVE=false
+
+RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
+    apt-get install -y zip && \
+    apt-get install -y libfontconfig1 libxrender1 && \
+    apt-get install -y fonts-wqy-microhei ttf-wqy-microhei fonts-wqy-zenhei ttf-wqy-zenhei && \
+    fc-cache -f -v \
 ;fi
 
 ###########################################################################
